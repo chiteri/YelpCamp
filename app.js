@@ -95,7 +95,7 @@ app.get("/campgrounds/:id", (req, res) => {
 //  COMMENTS ROUTES
 // =================
 // Form to add a comment
-app.get("/campgrounds/:id/comments/new", (req, res) => {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, (req, res) => {
 	Campground.findById(req.params.id, (err, campground) => {
 		if (err) {
 			console.log(err);
@@ -107,7 +107,7 @@ app.get("/campgrounds/:id/comments/new", (req, res) => {
 
 // Add a new comment to the DB
 // Form to add a comment
-app.post("/campgrounds/:id/comments", (req, res) => {
+app.post("/campgrounds/:id/comments", isLoggedIn, (req, res) => {
 	// Lookup campground using ID
 	Campground.findById(req.params.id, (err, campground) => {
 		if (err) {
@@ -164,6 +164,20 @@ app.post("/login", passport.authenticate("local", {
 		failureRedirect: "/login"
 	}), (req, res) => {
 });
+
+// Logout logic
+app.get("/logout", (req, res) => {
+	req.logout();
+	res.redirect("/campgrounds");
+});
+
+// Middleware 
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect("/login");
+}
 
 // Tell Express to listen for requests (start server)
 app.listen(3000, () => {
