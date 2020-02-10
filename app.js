@@ -29,6 +29,13 @@ app.use(require("express-session")({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Add some middleware to include a new user to each page
+app.use((req, res, next) => {
+	res.locals.currentUser = req.user;
+	next();
+});
+
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
