@@ -153,6 +153,18 @@ app.post("/register", (req, res) => {
 	});
 });
 
+// Show login form 
+app.get("/login", (req, res) => {
+	res.render("login");
+});
+
+// Handling login logic
+app.post("/login", passport.authenticate("local", {
+		successRedirect: "/campgrounds",
+		failureRedirect: "/login"
+	}), (req, res) => {
+});
+
 // Tell Express to listen for requests (start server)
 app.listen(3000, () => {
 	console.log("Yelp camp server listening on port 3000");
