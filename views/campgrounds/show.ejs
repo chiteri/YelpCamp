@@ -21,6 +21,9 @@
 						<p>	<%= campground.description %> </p> 
 						<p> <em>Submitted by</em> <%= campground.author.username %> </p>
 						<a class="btn btn-warning" href="/campgrounds/<%= campground._id%>/edit"> Edit</a>
+						<form id="delete-form" method="POST" action="/campgrounds/<%= campground._id%>?_method=DELETE">
+							<button class="btn btn-danger" type="submit">Delete</button>
+						</form>
 					</div>
 				</div>
 				
