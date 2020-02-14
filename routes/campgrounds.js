@@ -17,13 +17,18 @@ router.get("/", (req, res) => {
 });
 
 // CREATE: "/campgrounds" - Add new campground to DB
-router.post("/", (req, res) => { 
+router.post("/", isLoggedIn, (req, res) => { 
 	// Get data from form and add to campgrounds array
 	const name = req.body.name;
 	const image = req.body.image;
-	const description = req.body.description 
+	const description = req.body.description; 
 	
-	const newCampground = {name: name, image: image, description: description};
+	const author = {
+		id: req.user._id,
+		username: req.user.username
+	};
+	
+	const newCampground = {name: name, image: image, description: description, author: author};
 	
 	// campgrounds.push(newCampground);
 	Campground.create(newCampground, (err, newCamp) => {
@@ -41,7 +46,7 @@ router.post("/", (req, res) => {
 });
 
 // NEW - Show form to create new campground
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
 	res.render("campgrounds/new");
 });
 

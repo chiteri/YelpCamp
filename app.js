@@ -5,7 +5,7 @@ const bodyParser = require("body-parser"),
 	  LocalStrategy = require("passport-local"),
 	  Campground = require("./models/campground"),
       Comment    = require("./models/comment"),
-	  User 		 = require("./models/user"); 
+	  User 		 = require("./models/user"); //, 
 	  // seedDB = require("./seeds");
 
 // Require routes separately
