@@ -15,6 +15,34 @@ router.get("/new", isLoggedIn, (req, res) => {
 	});	
 });
 
+// Edit a comment 
+router.get("/:comment_id/edit", (req, res) => {
+	
+	Comment.findById(req.params.comment_id, (err, foundComment) => {
+		if (err) {
+			res.redirect("back");
+			// console.log(err);
+		} else {
+			res.render("comments/edit", {campground_id: req.params.id, comment: foundComment}); 
+		}
+	});	
+	
+	// res.render("comments/edit");
+});
+
+// Comments update
+router.put("/:comment_id", (req, res) => {
+	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+		if(err) {
+			res.redirect("back");
+		} else {
+			// Redirect somewhere
+			res.redirect("/campgrounds/"+req.params.id);
+		}
+	} );
+	// res.send("YOU HIT THE UPDATE FORM FOR COMMENT!!");
+});
+
 // Add a new comment to the DB
 router.post("/", isLoggedIn, (req, res) => {
 	// Lookup campground using ID
