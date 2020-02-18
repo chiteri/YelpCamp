@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const bodyParser = require("body-parser"), 
 	  express 	 = require("express"), 
 	  mongoose   = require("mongoose"),
