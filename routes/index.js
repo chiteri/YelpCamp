@@ -6,7 +6,7 @@ var router = express.Router();
 
 // Root route
 router.get("/register", (req, res) => {
-	res.render("register");
+	res.render("register", {page: 'register'});
 });
 
 // Handle sign up logic
@@ -15,9 +15,9 @@ router.post("/register", (req, res) => {
 	User.register(newUser, req.body.password, (err, user) => {
 		if(err) {
 			// console.log(err.message)
-			req.flash("error", err.message);
-			return res.redirect("/register");
-			// return res.render("register");
+			// req.flash("error", err.message);
+			// return res.redirect("/register");
+			return res.render("register", {error: err.message});
 		}
 		// Else authenticate the new user
 		passport.authenticate("local")(req, res, () => {
@@ -29,7 +29,7 @@ router.post("/register", (req, res) => {
 
 // Show login form 
 router.get("/login", (req, res) => {
-	res.render("login");
+	res.render("login", {page: 'login'});
 });
 
 // Handling login logic
