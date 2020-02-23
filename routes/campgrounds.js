@@ -99,14 +99,12 @@ router.put("/:id", middleware.checkCampgroundOwnership, (req, res) => {
 			req.flash("error", "Invalid address");
 			return res.redirect("back");
 		}
-		const lat = data[0].latitude;
-		const lng = data[0].longitude;
-		const location = data[0].formattedAddress;
-		
-		const newData = {name: req.body.campground.name, price: req.body.campground.price, image: req.body.campground.image, lat: lat, lng: lng, location: location, description: req.body.campground.description};
-	
+		req.body.campground.lat = data[0].latitude;
+		req.body.campground.lng = data[0].longitude;
+		req.body.campground.location = data[0].formattedAddress;
+
 		// Find and update the correct campground
-		Campground.findByIdAndUpdate(req.params.id, newData, (err, updatedCampground) => {
+		Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground) => {
 			if(err) {
 				req.flash("error", err.message);
 				res.redirect("back");
