@@ -14,7 +14,7 @@ middlewareObj.checkCampgroundOwnership = (req, res, next) => {
 			} else {
 				// Does the user own the campground? 
 				// Find if the ID of the author on that campground matches the ID of the user
-				if (foundCampground.author.id.equals(req.user._id)) {					
+				if (foundCampground.author.id.equals(req.user._id) || req.user.isAdmin) {					
 					// Render the edit template with that campground
 					next();
 				} else {
@@ -39,7 +39,7 @@ middlewareObj.checkCommentOwnership = (req, res, next) => {
 			} else {
 				// Does the user own the comment? 
 				// Find if the ID of the author on that comment matches the ID of the user
-				if (foundComment.author.id.equals(req.user._id)) {					
+				if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {					
 					// Render the edit template with that comment in a campground
 					next();
 				} else {

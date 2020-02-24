@@ -4,7 +4,8 @@ const passportLocalMongoose = require("passport-local-mongoose"),
 // Schema setup
 const userSchema = new mongoose.Schema ({
 	username: String,
-	password: String
+	password: String,
+	isAdmin: {type: Boolean, default: false}
 });
 
 // Add some methods for authentication to the User model
